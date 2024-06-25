@@ -29,6 +29,25 @@ function initialFetch(){
 		setTodoList(data.todos)
 	})
 }
+const deleteTask = (item, index) => {
+	setTodoList(
+				todoList.filter(
+					(t,currentIndex) =>
+						index != currentIndex
+				)
+			)
+			console.log(item.id)
+	fetch ('https://playground.4geeks.com/todo/todos/' + item.id, {				
+		method:"DELETE",
+		//body: JSON.stringify(item.label),
+		headers: {
+			"Content-Type": "application/json"
+				}
+
+			})
+			
+
+		}
 const createTodo = () => {
 	fetch('https://playground.4geeks.com/todo/todos/jacobbcabot',{
 		method: "POST",
@@ -38,7 +57,7 @@ const createTodo = () => {
 		  }),
 		headers: {"Content-Type":"application/json"}
 
-		
+
 	})
 	setTodoList([...todoList, {"label":inputValue,
 			"is_done": false}]);
@@ -71,13 +90,7 @@ const createTodo = () => {
 							<p key={index}>
 								{item.label}{" "}
 								<i className="fa-solid fa-trash-can"
-								onClick={() =>
-									setTodoList(
-										todoList.filter(
-											(t,currentIndex) =>
-												index != currentIndex
-										)
-									)
+								onClick={() => deleteTask(item, index)
 								}></i>
 							</p>
 						))
